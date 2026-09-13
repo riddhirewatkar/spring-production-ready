@@ -1,5 +1,6 @@
 package com.springboot.ProductionReady.spring_production_ready.advices;
 
+import com.springboot.ProductionReady.spring_production_ready.exceptions.EmployeeNotFoundException;
 import com.springboot.ProductionReady.spring_production_ready.exceptions.PostNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,5 +17,14 @@ public class GlobalExceptionHandler {
                 .build();
 
         return new ResponseEntity<>(new ApiResponse<>(apiError), apiError.getStatus());
+    }
+
+    @ExceptionHandler(EmployeeNotFoundException.class)
+    public ResponseEntity<ApiResponse<?>> handleException(EmployeeNotFoundException e) {
+        ApiError error = ApiError.builder()
+                .message(e.getMessage())
+                .status(HttpStatus.NOT_FOUND)
+                .build();
+        return new ResponseEntity<>(new ApiResponse<>(error), error.getStatus());
     }
 }

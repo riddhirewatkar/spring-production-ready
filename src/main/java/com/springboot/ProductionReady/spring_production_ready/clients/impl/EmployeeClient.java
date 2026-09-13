@@ -9,4 +9,5 @@ import java.util.List;
 public interface EmployeeClient {
     List<EmployeeDTO> getEmployees();
     EmployeeDTO getEmployeeId(Long id);
+    EmployeeDTO createEmployee(EmployeeDTO employeeDTO);
 }

@@ -43,7 +43,7 @@ public class EmployeeDTO {
     private Double salary;
 
     @PastOrPresent(message = "DateOfJoining field in Employee cannot be in the future")
-    private LocalDate dateOfJoining;
+    private LocalDate joiningDate;
 
     @AssertTrue(message = "Employee should be active")
     @JsonProperty("isActive")

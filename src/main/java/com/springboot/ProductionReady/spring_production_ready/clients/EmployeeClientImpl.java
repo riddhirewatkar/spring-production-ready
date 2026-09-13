@@ -4,9 +4,11 @@ import com.springboot.ProductionReady.spring_production_ready.advices.ApiRespons
 import com.springboot.ProductionReady.spring_production_ready.clients.impl.EmployeeClient;
 import com.springboot.ProductionReady.spring_production_ready.configs.RestClientConfig;
 import com.springboot.ProductionReady.spring_production_ready.dto.EmployeeDTO;
+import com.springboot.ProductionReady.spring_production_ready.exceptions.EmployeeNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
@@ -45,6 +47,20 @@ public class EmployeeClientImpl implements EmployeeClient {
             return employee;
 
         } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public EmployeeDTO createEmployee(EmployeeDTO employeeDTO) {
+        try {
+            EmployeeDTO employeeDTO1 = restClient.post()
+                    .uri("/employee")
+                    .body(employeeDTO)
+                    .retrieve()
+                    .body(EmployeeDTO.class);
+            return employeeDTO1;
+        }catch (Exception e){
             throw new RuntimeException(e);
         }
     }
